@@ -5,8 +5,8 @@ import winSoundFile from "../assets/Winning.mp3";
 import loseSoundFile from "../assets/Losing.wav";
 import confetti from "canvas-confetti";
 
-const RED_NUMBERS = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34];
-const BLACK_NUMBERS = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33,35];
+const RED_NUMBERS = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34,36];
+const BLACK_NUMBERS = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
 const GREEN_NUMBER = 0;
 const NUMBERS_ON_WHEEL = 37;
 
@@ -14,6 +14,7 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
   const [isSpinning, setIsSpinning] = useState(false);
   const [displayedNumber, setDisplayedNumber] = useState(0);
   const [flashResult, setFlashResult] = useState(null);
+  const [spinCount, setSpinCount] = useState(0);
   const wheelRef = useRef(null);
   
   const spinSound = useRef(new Audio(spinSoundFile));
@@ -26,14 +27,14 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
     loseSound.current.volume = 0.6;
   }, []);
 
-  function getColor(number) {
+  const getColor = (number) => {
     if (RED_NUMBERS.includes(number)) return "#FF3131";
     if (BLACK_NUMBERS.includes(number)) return "#222";
     if (number === GREEN_NUMBER) return "#0F9D58";
     return "white";
-  }
+  };
 
-  function spinWheel() {
+  const spinWheel = () => {
     if (isSpinning) return;
     if (bet <= 0 || bet > balance) {
       setFlashResult({ message: "Invalid bet! Enter a valid bet.", type: "error" });
@@ -41,19 +42,22 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
     }
 
     setIsSpinning(true);
-    setBalance(balance - bet);
+    setBalance(prev => prev - bet);
     setResult(null);
+    spinSound.current.currentTime = 0;
     spinSound.current.play();
 
-    // Reset wheel position before starting new spin
-    if (wheelRef.current) {
-      wheelRef.current.style.transition = 'none';
-      wheelRef.current.style.transform = 'rotate(0deg)';
-      // Force reflow to apply the reset
-      void wheelRef.current.offsetHeight;
+    // Reset wheel position
+    const wheel = wheelRef.current;
+    if (wheel) {
+      wheel.style.transition = 'none';
+      wheel.style.transform = 'rotate(0deg)';
+      // Force reflow
+      void wheel.offsetWidth;
     }
 
-    let animationInterval = setInterval(() => {
+    // Random number animation during spin
+    const animationInterval = setInterval(() => {
       setDisplayedNumber(Math.floor(Math.random() * NUMBERS_ON_WHEEL));
     }, 100);
 
@@ -61,9 +65,9 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
     const anglePerNumber = 360 / NUMBERS_ON_WHEEL;
     const finalAngle = 360 * 5 + finalNumber * anglePerNumber;
 
-    if (wheelRef.current) {
-      wheelRef.current.style.transition = "transform 6s cubic-bezier(0.25, 1, 0.5, 1)";
-      wheelRef.current.style.transform = `rotate(${finalAngle}deg)`;
+    if (wheel) {
+      wheel.style.transition = "transform 6s cubic-bezier(0.17, 0.89, 0.32, 1.28)";
+      wheel.style.transform = `rotate(${finalAngle}deg)`;
     }
 
     setTimeout(() => {
@@ -73,77 +77,115 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
       calculateWinnings(finalNumber);
       updateHistory(betType, betNumber, bet, finalNumber);
       setIsSpinning(false);
-      
-      // Reset transition after spin completes
-      if (wheelRef.current) {
-        setTimeout(() => {
-          wheelRef.current.style.transition = 'none';
-          wheelRef.current.style.transform = 'rotate(0deg)';
-        }, 100);
-      }
+      setSpinCount(prev => prev + 1);
     }, 6000);
-  }
+  };
 
-  function celebrateWin() {
-    confetti({ particleCount: 200, spread: 70, origin: { y: 0.6 } });
-  }
+  const celebrateWin = () => {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#ffd700', '#ffffff', '#ff3131']
+    });
+  };
 
-  function calculateWinnings(winningNumber) {
+  const calculateWinnings = (winningNumber) => {
     let winnings = 0;
     let winMessage = `😢 You lost! Winning number was ${winningNumber}`;
+    let isWin = false;
 
     if (betType === "number" && winningNumber === betNumber) {
       winnings = bet * 35;
-      winMessage = `🎉 You won ₹${winnings}!`;
+      winMessage = `🎉 You won ₹${winnings.toLocaleString()}!`;
+      isWin = true;
     } else if (betType === "red" && RED_NUMBERS.includes(winningNumber)) {
       winnings = bet * 2;
-      winMessage = `🎉 You won ₹${winnings}!`;
+      winMessage = `🎉 You won ₹${winnings.toLocaleString()}!`;
+      isWin = true;
     } else if (betType === "black" && BLACK_NUMBERS.includes(winningNumber)) {
       winnings = bet * 2;
-      winMessage = `🎉 You won ₹${winnings}!`;
+      winMessage = `🎉 You won ₹${winnings.toLocaleString()}!`;
+      isWin = true;
     } else if (betType === "green" && winningNumber === GREEN_NUMBER) {
       winnings = bet * 35;
-      winMessage = `🎉 You won ₹${winnings}!`;
+      winMessage = `🎉 You won ₹${winnings.toLocaleString()}!`;
+      isWin = true;
     }
 
-    if (winnings > 0) {
-      setBalance((prevBalance) => prevBalance + winnings);
+    if (isWin) {
+      setBalance(prev => prev + winnings);
+      winSound.current.currentTime = 0;
       winSound.current.play();
       celebrateWin();
     } else {
+      loseSound.current.currentTime = 0;
       loseSound.current.play();
     }
 
-    setFlashResult({ message: winMessage, number: winningNumber, type: winnings > 0 ? "win" : "lose" });
+    setFlashResult({ 
+      message: winMessage, 
+      number: winningNumber, 
+      type: isWin ? "win" : "lose" 
+    });
 
     setTimeout(() => setFlashResult(null), 4000);
-  }
+  };
 
-  function updateHistory(type, number, amount, result) {
+  const updateHistory = (type, number, amount, result) => {
     const newHistory = [...history, {
       type,
       number,
       amount,
       result,
-      timestamp: new Date().toLocaleTimeString()
+      timestamp: new Date().toLocaleTimeString(),
+      winNum: result,
+      betNum: number,
+      betAmt: amount,
+      betType: type
     }];
-    setHistory(newHistory.slice(-10)); // Keep only last 10 entries
-  }
+    setHistory(newHistory.slice(-10));
+  };
 
   return (
     <div className="roulette-container">
-      {flashResult && <div className={`result-card ${flashResult.type}`}>{flashResult.message}</div>}
+      {flashResult && (
+        <div className={`result-card ${flashResult.type}`}>
+          <div className="result-number" style={{ backgroundColor: getColor(flashResult.number) }}>
+            {flashResult.number}
+          </div>
+          {flashResult.message}
+        </div>
+      )}
 
       <div className="wheel-container">
         <div className="wheel" ref={wheelRef}></div>
+        <div className="wheel-pointer"></div>
       </div>
 
       <div className="controls-container">
-        <div className="roulette-number" style={{ backgroundColor: getColor(displayedNumber) }}>
+        <div 
+          className="roulette-number" 
+          style={{ 
+            backgroundColor: getColor(displayedNumber),
+            boxShadow: `0 0 15px ${getColor(displayedNumber)}`
+          }}
+        >
           {displayedNumber}
         </div>
-        <button className="spin-button" onClick={spinWheel} disabled={isSpinning}>
-          🎰 Spin
+        <button 
+          className={`spin-button ${isSpinning ? 'spinning' : ''}`} 
+          onClick={spinWheel} 
+          disabled={isSpinning}
+        >
+          {isSpinning ? (
+            <span className="spinner"></span>
+          ) : (
+            <>
+              🎰 Spin
+              <span className="pulse-effect"></span>
+            </>
+          )}
         </button>
       </div>
     </div>

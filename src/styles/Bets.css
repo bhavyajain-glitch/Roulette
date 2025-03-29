@@ -1,107 +1,162 @@
 .bets-container {
-    background: rgba(10, 10, 20, 0.95);
+    background: rgba(15, 15, 30, 0.95);
     padding: 25px;
-    border-radius: 16px;
+    border-radius: 18px;
     max-width: 450px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
-                0 0 0 1px rgba(255, 215, 0, 0.2),
-                inset 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4),
+                0 0 0 2px rgba(255, 215, 0, 0.3),
+                inset 0 0 25px rgba(0, 0, 0, 0.6);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(8px);
+    gap: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    transform: translateZ(0);
   }
   
   .bet-input-group {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
   }
   
   .bet-label {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.95rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-align: left;
-    margin-left: 10px;
+    margin-left: 12px;
     transition: all 0.3s ease;
+    font-weight: 600;
   }
   
   .bet-label.active {
     color: #ffd700;
-    text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+  }
+  
+  .bet-input-wrapper {
+    position: relative;
   }
   
   .bet-input {
     width: 100%;
-    padding: 14px 20px;
-    border-radius: 10px;
+    padding: 16px 25px;
+    border-radius: 12px;
     border: none;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: bold;
     text-align: center;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     color: white;
     outline: none;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 3px 15px rgba(0, 0, 0, 0.4),
+                0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
   .bet-input:focus {
-    background: rgba(0, 0, 0, 0.7);
-    border-color: rgba(255, 215, 0, 0.5);
-    box-shadow: inset 0 2px 15px rgba(0, 0, 0, 0.5),
-                0 0 10px rgba(255, 215, 0, 0.2);
-    transform: translateY(-2px);
-  }
-  
-  .bet-input.active {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 215, 0, 0.6);
+    box-shadow: inset 0 3px 20px rgba(0, 0, 0, 0.6),
+                0 0 15px rgba(255, 215, 0, 0.3);
+    transform: translateY(-3px);
     color: #ffd700;
   }
   
   .bet-input::placeholder {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.3);
     font-weight: normal;
+  }
+  
+  .chip {
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.8);
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle at 30% 30%, #ffd700, #daa520);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5),
+                inset 0 0 10px rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+  
+  .chip.animate {
+    animation: chipBounce 0.8s ease-out forwards;
+  }
+  
+  .chip-value {
+    color: #222;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  }
+  
+  @keyframes chipBounce {
+    0% {
+      opacity: 0;
+      transform: translateY(-50%) scale(0.5) rotate(-45deg);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1) rotate(10deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(-50%) scale(1) rotate(0);
+    }
   }
   
   .bet-type-selector {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 12px;
     width: 100%;
   }
   
   .bet-type-btn {
-    padding: 12px 10px;
-    border-radius: 8px;
+    padding: 14px 12px;
+    border-radius: 10px;
     border: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .bet-type-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   }
   
   .bet-type-btn.active {
     color: white;
     font-weight: bold;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
   }
   
   .bet-type-btn.active::after {
@@ -110,55 +165,72 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 3px;
+    height: 4px;
     background: #ffd700;
+    box-shadow: 0 0 10px #ffd700;
+  }
+  
+  .bet-icon {
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
   }
   
   /* Specific colors for each bet type */
-  .bet-type-btn[data-type="number"] {
-    color: #aaf;
-  }
-  
   .bet-type-btn[data-type="number"].active {
-    background: rgba(100, 100, 255, 0.2);
-    border-bottom: 3px solid #aaf;
-  }
-  
-  .bet-type-btn[data-type="red"] {
-    color: #ff9999;
+    background: rgba(100, 100, 255, 0.3);
+    border: 1px solid rgba(100, 100, 255, 0.5);
   }
   
   .bet-type-btn[data-type="red"].active {
-    background: rgba(255, 50, 50, 0.2);
-    border-bottom: 3px solid #ff3131;
-  }
-  
-  .bet-type-btn[data-type="black"] {
-    color: #ccc;
+    background: rgba(255, 50, 50, 0.3);
+    border: 1px solid rgba(255, 50, 50, 0.5);
   }
   
   .bet-type-btn[data-type="black"].active {
-    background: rgba(100, 100, 100, 0.2);
-    border-bottom: 3px solid #222;
-  }
-  
-  .bet-type-btn[data-type="green"] {
-    color: #7f7;
+    background: rgba(100, 100, 100, 0.3);
+    border: 1px solid rgba(100, 100, 100, 0.5);
   }
   
   .bet-type-btn[data-type="green"].active {
-    background: rgba(0, 200, 0, 0.2);
-    border-bottom: 3px solid #0f9d58;
+    background: rgba(0, 200, 0, 0.3);
+    border: 1px solid rgba(0, 200, 0, 0.5);
   }
   
   /* Responsive adjustments */
   @media (max-width: 500px) {
     .bets-container {
-      padding: 20px 15px;
+      padding: 20px;
+      gap: 20px;
     }
     
     .bet-type-selector {
       grid-template-columns: 1fr;
+    }
+    
+    .bet-input {
+      padding: 14px 20px;
+      font-size: 1.1rem;
+    }
+    
+    .chip {
+      width: 45px;
+      height: 45px;
+      right: -10px;
+    }
+    
+    .chip-value {
+      font-size: 0.8rem;
+    }
+    
+    .bet-type-btn {
+      padding: 12px 10px;
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .bets-container {
+      padding: 15px;
     }
     
     .bet-input {

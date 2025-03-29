@@ -1,33 +1,35 @@
 .controls-container {
     display: flex;
     justify-content: center;
-    margin: 25px 0;
+    margin: 30px 0;
     width: 100%;
+    position: relative;
   }
   
   .reset-button {
     background: linear-gradient(135deg, #ff3131, #c70039);
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: bold;
-    padding: 14px 28px;
+    padding: 16px 35px;
     border: none;
-    border-radius: 12px;
+    border-radius: 15px;
     cursor: pointer;
-    box-shadow: 0 5px 15px rgba(199, 0, 57, 0.4),
-                0 0 0 2px rgba(255, 255, 255, 0.1),
-                inset 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(199, 0, 57, 0.5),
+                0 0 0 3px rgba(255, 215, 0, 0.2),
+                inset 0 0 15px rgba(0, 0, 0, 0.4);
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    min-width: 200px;
+    letter-spacing: 2px;
+    min-width: 220px;
     z-index: 1;
+    border: 2px solid rgba(255, 255, 255, 0.1);
   }
   
   .reset-button::before {
@@ -40,20 +42,21 @@
     background: linear-gradient(
       to bottom right,
       rgba(255, 255, 255, 0) 45%,
-      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0.25) 50%,
       rgba(255, 255, 255, 0) 55%
     );
     transform: rotate(30deg);
-    transition: all 0.6s;
+    transition: all 0.8s;
     opacity: 0;
     z-index: -1;
   }
   
   .reset-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(199, 0, 57, 0.6),
-                0 0 0 3px rgba(255, 255, 255, 0.2);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(199, 0, 57, 0.7),
+                0 0 0 4px rgba(255, 255, 255, 0.25);
     background: linear-gradient(135deg, #ff4141, #d7003a);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
   
   .reset-button:hover::before {
@@ -63,39 +66,78 @@
   }
   
   .reset-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 3px 10px rgba(199, 0, 57, 0.4);
+    transform: translateY(2px);
+    box-shadow: 0 5px 15px rgba(199, 0, 57, 0.5);
   }
   
+  .reset-icon {
+    font-size: 1.4rem;
+    transition: transform 0.5s ease;
+  }
+  
+  .reset-button:hover .reset-icon {
+    transform: rotate(180deg);
+  }
+  
+  /* Confirmation state styles */
   .reset-button.confirm {
-    animation: pulse 1.5s infinite;
     background: linear-gradient(135deg, #ff6347, #ff0000);
+    animation: pulse 2s infinite;
+    padding: 16px 30px;
+  }
+  
+  .confirm-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .confirm-text {
+    font-weight: 800;
+    letter-spacing: 3px;
+  }
+  
+  .reset-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 0 0 15px 15px;
+    transition: width 0.1s linear;
   }
   
   @keyframes pulse {
     0% {
-      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8),
+                  0 0 0 3px rgba(255, 215, 0, 0.3);
     }
     70% {
-      box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+      box-shadow: 0 0 0 20px rgba(255, 0, 0, 0),
+                  0 0 0 3px rgba(255, 215, 0, 0.3);
     }
     100% {
-      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0),
+                  0 0 0 3px rgba(255, 215, 0, 0.3);
     }
   }
   
   .pulse-dot {
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: white;
-    animation: blink 1s infinite alternate;
+    animation: blink 1.5s infinite alternate;
+    box-shadow: 0 0 10px white;
   }
   
   @keyframes blink {
-    from { opacity: 0.3; }
-    to { opacity: 1; }
+    0% { opacity: 0.3; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1.1); }
   }
   
   .pulse-dot:nth-child(1) {
@@ -103,14 +145,55 @@
   }
   
   .pulse-dot:nth-child(3) {
-    animation-delay: 0.5s;
+    animation-delay: 0.75s;
+  }
+  
+  /* Confetti overlay */
+  .confetti-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" font-size="20" text-anchor="middle" fill="gold">🎉</text></svg>') 
+                center/20px 20px repeat;
+    animation: confettiFall 3s linear forwards;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  
+  @keyframes confettiFall {
+    0% { transform: translateY(-100vh); opacity: 1; }
+    100% { transform: translateY(100vh); opacity: 0; }
   }
   
   /* Responsive adjustments */
   @media (max-width: 768px) {
     .reset-button {
+      padding: 14px 25px;
+      font-size: 1.1rem;
+      min-width: 200px;
+    }
+    
+    .confirm-text {
+      letter-spacing: 1px;
+    }
+    
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reset-button {
       padding: 12px 20px;
       font-size: 1rem;
       min-width: 180px;
+    }
+    
+    .confirm-content {
+      gap: 10px;
     }
   }

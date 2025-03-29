@@ -1,18 +1,36 @@
+/* Add this to your existing global.css */
 body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background-color: #282c34;
-    color: white;
-  }
-  
-  h1 {
-    font-size: 2rem;
-    margin: 20px 0;
-  }
-  
-  div {
-    margin: 10px;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+#root {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* If you're using App.css, add these: */
+.app-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Ensure all main containers are centered */
+.game-container, .roulette-container, .bets-container, 
+.history-container, .balance-container, .controls-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
