@@ -1,0 +1,38 @@
+.roulette-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .roulette-wheel {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 5px solid gold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 3s ease-out;
+    background: radial-gradient(circle, red, black);
+  }
+  
+  .roulette-number {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+  }
+  
+  button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
