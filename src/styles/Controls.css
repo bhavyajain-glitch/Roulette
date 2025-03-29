@@ -1,0 +1,116 @@
+.controls-container {
+    display: flex;
+    justify-content: center;
+    margin: 25px 0;
+    width: 100%;
+  }
+  
+  .reset-button {
+    background: linear-gradient(135deg, #ff3131, #c70039);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(199, 0, 57, 0.4),
+                0 0 0 2px rgba(255, 255, 255, 0.1),
+                inset 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    min-width: 200px;
+    z-index: 1;
+  }
+  
+  .reset-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to bottom right,
+      rgba(255, 255, 255, 0) 45%,
+      rgba(255, 255, 255, 0.2) 50%,
+      rgba(255, 255, 255, 0) 55%
+    );
+    transform: rotate(30deg);
+    transition: all 0.6s;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  .reset-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(199, 0, 57, 0.6),
+                0 0 0 3px rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg, #ff4141, #d7003a);
+  }
+  
+  .reset-button:hover::before {
+    opacity: 1;
+    left: 100%;
+    top: 100%;
+  }
+  
+  .reset-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 10px rgba(199, 0, 57, 0.4);
+  }
+  
+  .reset-button.confirm {
+    animation: pulse 1.5s infinite;
+    background: linear-gradient(135deg, #ff6347, #ff0000);
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7);
+    }
+    70% {
+      box-shadow: 0 0 0 15px rgba(255, 0, 0, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+  }
+  
+  .pulse-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: white;
+    animation: blink 1s infinite alternate;
+  }
+  
+  @keyframes blink {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+  }
+  
+  .pulse-dot:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .pulse-dot:nth-child(3) {
+    animation-delay: 0.5s;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .reset-button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      min-width: 180px;
+    }
+  }
