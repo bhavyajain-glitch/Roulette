@@ -1,3 +1,4 @@
-export default function Balance(){
-    return <div>💰 Balance: $1000</div>
-}
+export default function Balance({ balance }) {
+    return <h2>Balance: ₹{balance}</h2>;
+  }
+  
