@@ -5,7 +5,7 @@ export default function History({ history }) {
         <ul>
           {history.map((entry, index) => (
             <li key={index}>
-              Bet: {entry.betNum}, Amount: ₹{entry.betAmt}, Winning Number: {entry.winNum}
+              Bet Type: {entry.betType}, Bet: {entry.betNum || entry.betType}, Amount: ₹{entry.betAmt}, Winning Number: {entry.winNum}
             </li>
           ))}
         </ul>

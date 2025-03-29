@@ -5,7 +5,11 @@ import winSoundFile from "../assets/Winning.mp3";
 import loseSoundFile from "../assets/Losing.wav";
 import confetti from "canvas-confetti";
 
-export default function Wheel({ balance, setBalance, bet, betNumber, setResult, history, setHistory }) {
+const RED_NUMBERS = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34];
+const BLACK_NUMBERS = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33];
+const GREEN_NUMBER = 0;
+
+export default function Wheel({ balance, setBalance, bet, betType, betNumber, setResult, history, setHistory }) {
   const [angle, setAngle] = useState(0);
   const wheelRef = useRef(null);
 
@@ -14,8 +18,8 @@ export default function Wheel({ balance, setBalance, bet, betNumber, setResult, 
   const loseSound = new Audio(loseSoundFile);
 
   function spinWheel() {
-    if (bet <= 0 || betNumber === null || bet > balance) {
-      alert("Invalid bet! Enter a valid bet and choose a number.");
+    if (bet <= 0 || bet > balance) {
+      alert("Invalid bet! Enter a valid bet.");
       return;
     }
 
@@ -32,7 +36,7 @@ export default function Wheel({ balance, setBalance, bet, betNumber, setResult, 
     setTimeout(() => {
       setResult(winningNumber);
       calculateWinnings(winningNumber);
-      updateHistory(betNumber, bet, winningNumber);
+      updateHistory(betType, betNumber, bet, winningNumber);
     }, 3000);
   }
 
@@ -45,8 +49,19 @@ export default function Wheel({ balance, setBalance, bet, betNumber, setResult, 
   }
 
   function calculateWinnings(winningNumber) {
-    if (winningNumber === betNumber) {
-      let winnings = bet * 35;
+    let winnings = 0;
+
+    if (betType === "number" && winningNumber === betNumber) {
+      winnings = bet * 35;
+    } else if (betType === "red" && RED_NUMBERS.includes(winningNumber)) {
+      winnings = bet * 2;
+    } else if (betType === "black" && BLACK_NUMBERS.includes(winningNumber)) {
+      winnings = bet * 2;
+    } else if (betType === "green" && winningNumber === GREEN_NUMBER) {
+      winnings = bet * 35;
+    }
+
+    if (winnings > 0) {
       setBalance(prevBalance => prevBalance + winnings);
       winSound.play();
       celebrateWin();
@@ -57,8 +72,8 @@ export default function Wheel({ balance, setBalance, bet, betNumber, setResult, 
     }
   }
 
-  function updateHistory(betNum, betAmt, winNum) {
-    let newHistory = [...history, { betNum, betAmt, winNum }];
+  function updateHistory(betType, betNum, betAmt, winNum) {
+    let newHistory = [...history, { betType, betNum, betAmt, winNum }];
     if (newHistory.length > 5) newHistory.shift();
     setHistory(newHistory);
   }

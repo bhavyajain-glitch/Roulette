@@ -9,6 +9,7 @@ import History from "./components/History";
 export default function App() {
   const [balance, setBalance] = useState(1000);
   const [bet, setBet] = useState(0);
+  const [betType, setBetType] = useState("number"); // "number", "red", "black", "green"
   const [betNumber, setBetNumber] = useState(null);
   const [history, setHistory] = useState([]);
   const [result, setResult] = useState(null);
@@ -19,16 +20,14 @@ export default function App() {
       <Balance balance={balance} />
       <Wheel 
         balance={balance} setBalance={setBalance}
-        bet={bet} setBet={setBet}
+        bet={bet} betType={betType} setBetType={setBetType}
         betNumber={betNumber} setBetNumber={setBetNumber}
         result={result} setResult={setResult}
         history={history} setHistory={setHistory}
       />
-      <Bets bet={bet} setBet={setBet} betNumber={betNumber} setBetNumber={setBetNumber} />
-      <Controls setBalance={setBalance} setBet={setBet} setBetNumber={setBetNumber} setHistory={setHistory} setResult={setResult} />
+      <Bets bet={bet} setBet={setBet} betType={betType} setBetType={setBetType} betNumber={betNumber} setBetNumber={setBetNumber} />
+      <Controls setBalance={setBalance} setBet={setBet} setBetNumber={setBetNumber} setBetType={setBetType} setHistory={setHistory} setResult={setResult} />
       <History history={history} />
     </div>
   );
 }
-
-
