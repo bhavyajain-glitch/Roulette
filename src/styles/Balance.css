@@ -102,7 +102,6 @@
     border: 1px solid rgba(255, 0, 0, 0.3);
   }
   
-  /* Animations */
   @keyframes slideIn {
     from {
       opacity: 0;
@@ -175,7 +174,6 @@
     }
   }
   
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .balance-container {
       padding: 15px 25px;

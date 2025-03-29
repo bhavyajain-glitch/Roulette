@@ -5,7 +5,6 @@ export default function Bets({ bet, setBet, betType, setBetType, betNumber, setB
   const [activeField, setActiveField] = useState(null);
   const [chipAnimation, setChipAnimation] = useState(false);
 
-  // Validate number input for betNumber (0-36)
   const handleNumberChange = (e) => {
     const value = parseInt(e.target.value);
     if (value >= 0 && value <= 36) {
@@ -15,7 +14,7 @@ export default function Bets({ bet, setBet, betType, setBetType, betNumber, setB
     }
   };
 
-  // Animate chip when bet changes
+
   useEffect(() => {
     if (bet > 0) {
       setChipAnimation(true);

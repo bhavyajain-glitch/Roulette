@@ -21,7 +21,7 @@ export default function History({ history }) {
     if (entry.betType === "red") return "#FF3131";
     if (entry.betType === "black") return "#222";
     if (entry.betType === "green") return "#0F9D58";
-    return "#4a90e2"; // Blue for numbers
+    return "#4a90e2"; 
   };
 
   const formatBetType = (type) => {

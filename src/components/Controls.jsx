@@ -17,7 +17,7 @@ export default function Controls({
     let timer;
     if (isConfirming) {
       const startTime = Date.now();
-      const duration = 3000; // 3 seconds confirmation window
+      const duration = 3000; 
       
       const updateProgress = () => {
         const elapsed = Date.now() - startTime;
@@ -43,8 +43,7 @@ export default function Controls({
       setIsConfirming(true);
       return;
     }
-    
-    // Reset game state
+
     setBalance(1000);
     setBet(0);
     setBetNumber(null);
@@ -54,7 +53,6 @@ export default function Controls({
     setIsConfirming(false);
     setResetProgress(0);
     
-    // Celebration effect
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
   };

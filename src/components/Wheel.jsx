@@ -47,16 +47,13 @@ export default function Wheel({ balance, setBalance, bet, betType, betNumber, se
     spinSound.current.currentTime = 0;
     spinSound.current.play();
 
-    // Reset wheel position
     const wheel = wheelRef.current;
     if (wheel) {
       wheel.style.transition = 'none';
       wheel.style.transform = 'rotate(0deg)';
-      // Force reflow
       void wheel.offsetWidth;
     }
 
-    // Random number animation during spin
     const animationInterval = setInterval(() => {
       setDisplayedNumber(Math.floor(Math.random() * NUMBERS_ON_WHEEL));
     }, 100);

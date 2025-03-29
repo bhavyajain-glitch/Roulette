@@ -75,7 +75,6 @@
   gap: 25px;
 }
 
-/* Responsive Design */
 @media (max-width: 900px) {
   .game-layout {
     grid-template-columns: 1fr;

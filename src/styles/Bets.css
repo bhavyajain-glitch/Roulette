@@ -175,7 +175,6 @@
     transition: all 0.3s ease;
   }
   
-  /* Specific colors for each bet type */
   .bet-type-btn[data-type="number"].active {
     background: rgba(100, 100, 255, 0.3);
     border: 1px solid rgba(100, 100, 255, 0.5);
@@ -196,7 +195,6 @@
     border: 1px solid rgba(0, 200, 0, 0.5);
   }
   
-  /* Responsive adjustments */
   @media (max-width: 500px) {
     .bets-container {
       padding: 20px;

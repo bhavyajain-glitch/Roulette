@@ -12,15 +12,13 @@ export default function Balance({ balance }) {
       const diff = balance - prevBalance;
       setDifference(diff);
       
-      // Determine animation class based on balance change
+
       if (diff > 0) {
         setAnimationClass("balance-update balance-win");
       } else if (diff < 0) {
         setAnimationClass("balance-update balance-lose");
       }
-
-      // Animate the counting effect
-      const duration = 1000; // ms
+      const duration = 1000; 
       const start = prevBalance;
       const end = balance;
       const startTime = performance.now();

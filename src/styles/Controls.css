@@ -79,7 +79,6 @@
     transform: rotate(180deg);
   }
   
-  /* Confirmation state styles */
   .reset-button.confirm {
     background: linear-gradient(135deg, #ff6347, #ff0000);
     animation: pulse 2s infinite;
@@ -148,7 +147,6 @@
     animation-delay: 0.75s;
   }
   
-  /* Confetti overlay */
   .confetti-overlay {
     position: fixed;
     top: 0;
@@ -168,7 +166,6 @@
     100% { transform: translateY(100vh); opacity: 0; }
   }
   
-  /* Responsive adjustments */
   @media (max-width: 768px) {
     .reset-button {
       padding: 14px 25px;

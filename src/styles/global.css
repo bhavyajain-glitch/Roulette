@@ -1,4 +1,4 @@
-/* Add this to your existing global.css */
+
 body {
   display: flex;
   flex-direction: column;
@@ -16,7 +16,6 @@ body {
   align-items: center;
 }
 
-/* If you're using App.css, add these: */
 .app-container {
   width: 100%;
   display: flex;
@@ -25,7 +24,6 @@ body {
   text-align: center;
 }
 
-/* Ensure all main containers are centered */
 .game-container, .roulette-container, .bets-container, 
 .history-container, .balance-container, .controls-container {
   display: flex;

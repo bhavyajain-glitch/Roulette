@@ -227,7 +227,6 @@
   to { opacity: 0; transform: translate(-50%, 20px); }
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .wheel-container {
     width: 240px;
